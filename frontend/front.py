@@ -37,8 +37,4 @@ criar_frame_com_borda(w, 48, 10, 650, 50, "Logs de Registros de movimentação n
 criar_frame_com_borda(w, 115, 30, 50, 300, "Área do vídeo")
 w.configure(background=cinza_escuro)
 
-
-
-
-
 w.mainloop()
