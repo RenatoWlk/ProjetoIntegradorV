@@ -1,0 +1,101 @@
+
+/* Estilo geral */
+body {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #343434;
+}
+
+h1 {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    color: #ddd;
+    margin: 0;
+    padding: 20px;
+    background-color: #343434;
+}	
+
+header img{
+    height: 70px;
+    width: 70px;
+}
+
+header {
+    background-color: #343434;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #000;
+}
+/* Cabeçalho */
+.videos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #343434;
+    padding: 20px;
+}
+
+.videos .livres, .videos .ocupadas {
+    display: flex;
+    flex-direction: column;
+}
+
+.videos h2 {
+    margin-bottom: 10px;
+    color: #ddd;
+}
+
+.videos video {
+    display:inline-flex;
+    width: 300px;
+    height: 200px;
+    margin: px;
+    border: 20px solid #343434;
+    border-color: #888;
+    background-color: #ddd;
+}
+
+
+.estacionamento {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    padding: 20px;
+    background-color: #343434;
+}
+
+#estacionamento {
+    width: auto;
+    height: auto;
+    align-self: flex-start;
+    margin-left: 600px;
+   
+}
+
+#faixadepedestre {
+    width: auto;
+    height: 300px;
+    
+    margin-right: 42%;
+    margin-bottom: 2px;
+}
+
+#icon {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 60%;
+    right: 0;
+    margin-right: 42%;
+}
+
+footer{
+    background-color: #343434;
+}
+
+
+
