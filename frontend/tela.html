@@ -1,62 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-  <title>Monitoramento de estacionamento</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-  <header>
-    <div class="imagens direita">
-        <img src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/pedestre.png" alt="Imagem do estacionamento">
-        <img src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/sinal-de-transito.png" alt="Imagem do estacionamento">
-        <img src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/pare.png" alt="Imagem do estacionamento">
-        <img src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/luzes-de-transito.png" alt="Imagem do estacionamento">
-        </div>
-    <div class="TITULO"> 
-    <h1>Monitoramento de estacionamento</h1>
-    </div>
-    <div class="imagens esquerda">
-        <img src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/bicicleta.png" alt="Imagem do estacionamento">
-        <img src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/caminhao.png" alt="Imagem do estacionamento">
-        <img src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/parking.png" alt="Imagem do estacionamento">
-        <img src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/noparking.jpg" alt="Imagem do estacionamento">
-        </div>
-    
-</header>
-
-  <main>
-
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Monitoramento de estacionamento</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <div class="imagens direita">
+        <img src="../frontend/imagens/pedestre.png" alt="Imagem do estacionamento">
+        <img src="../frontend/imagens/sinal-de-transito.png" alt="Imagem do estacionamento">
+        <img src="../frontend/imagens/pare.png" alt="Imagem do estacionamento">
+        <img src="../frontend/imagens/luzes-de-transito.png" alt="Imagem do estacionamento">
+      </div>
+      <div class="TITULO"> 
+        <h1>Monitoramento de estacionamento</h1>
+      </div>
+      <div class="imagens esquerda">
+        <img src="../frontend/imagens/bicicleta.png" alt="Imagem do estacionamento">
+        <img src="../frontend/imagens/caminhao.png" alt="Imagem do estacionamento">
+        <img src="../frontend/imagens/parking.png" alt="Imagem do estacionamento">
+        <img src="../frontend/imagens/noparking.jpg" alt="Imagem do estacionamento">
+      </div>
+    </header>
+    <main>
       <div class="videos">
         <div class="livres">
-            <h2>Livres:</h2>
-            <video src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/YOLOV8/yolov8parkingspace-main/parking1.mp4" autoplay muted loop></video>
+          <h2>Livres:</h2>
+          <video src="../YOLOV8/yolov8parkingspace-main/parking1.mp4" autoplay muted loop></video>
         </div>
         <div class="ocupadas">
-            <h2>Ocupadas:</h2>
-            <video src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/YOLOV8/yolov8parkingspace-main/parking1.mp4" autoplay muted loop></video>
+          <h2>Ocupadas:</h2>
+          <video src="../YOLOV8/yolov8parkingspace-main/parking1.mp4" autoplay muted loop></video>
         </div>
-    </div>  
-      
-
-     <div class="estacionamento">
+      </div>  
+      <div class="estacionamento">
         <p id="dataContainer3"></p>
-        <img id="estacionamento" src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/image.png" alt="Imagem do estacionamento">
-        <img id="faixadepedestre" src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/faixadepedestre.png" alt="">
-        <img id="icon" src="C:/Users/p_ped/OneDrive/Área de Trabalho/Projeto5/ProjetoIntegradorV/frontend/imagens/usericon.png" alt="">
-        
-    </div>
-    
-  </main>
-
-  <script src="script.js"></script>
-</body>
-
+        <img id="estacionamento" src="../frontend/imagens/image.png" alt="Imagem do estacionamento">
+        <div class="dados">
+          <p id="bicicleta">0</p>
+          <p id="moto">0</p>
+          <p id="carro">0</p>
+          <p id="caminhao">0</p>
+        </div>
+        <img id="faixadepedestre" src="../frontend/imagens/faixadepedestre.png" alt="">
+        <img id="icon" src="../frontend/imagens/usericon.png" alt="">
+        <p id="pedestre">0</p>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body> 
 </html>

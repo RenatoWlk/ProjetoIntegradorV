@@ -2,8 +2,14 @@ import cv2
 import pandas as pd
 import numpy as np
 from ultralytics import YOLO
+import json
+import time
+import threading
+
+dados_yolo = {"carro": 0}
 
 # CONSTANTES
+DADOS_YOLO_PATH = 'D:\\Documents\\ProjetoIntegradorV\\frontend\\dados_yolo.json'
 VIDEO_PATH = 'D:/Documents/ProjetoIntegradorV/YOLOV8/yolov8parkingspace-main/parking1.mp4'
 CLASSES_PATH = 'D:/Documents/ProjetoIntegradorV/YOLOV8/yolov8parkingspace-main/classes.txt'
 AREA_9 = [(500,327),(550,388),(610,380),(555,324)]
@@ -17,8 +23,16 @@ def mouse_event_handler(event, x, y, flags, param):
         colorsBGR = [x, y]
         print(colorsBGR)
 
+def escrever_dados_json():
+    while True:
+        with open(DADOS_YOLO_PATH, 'w') as f:
+            json.dump(dados_yolo, f)
+        time.sleep(1)
+
 # FUNÇÃO PRINCIPAL
 def main():
+    global dados_yolo
+
     cv2.namedWindow('RGB')
     cv2.setMouseCallback('RGB', mouse_event_handler)
 
@@ -66,6 +80,7 @@ def main():
                     list9.append(c)
             
         a9 = (len(list9))
+        dados_yolo["carro"] = a9
 
         if a9 == 1:
             cv2.polylines(frame, [np.array(AREA_9,np.int32)], True, (0,0,255), 2)
@@ -79,6 +94,8 @@ def main():
         if cv2.waitKey(1)&0xFF == 27:
             break
 
+    thread_escrita_dados = threading.Thread(target=escrever_dados_json)
+    thread_escrita_dados.start()
     cap.release()
     cv2.destroyAllWindows()
 
