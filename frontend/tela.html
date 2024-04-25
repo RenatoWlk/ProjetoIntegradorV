@@ -11,45 +11,44 @@
   </head>
   <body>
     <header>
-      <div class="imagens direita">
-        <img src="../frontend/imagens/pedestre.png" alt="Imagem do estacionamento">
-        <img src="../frontend/imagens/sinal-de-transito.png" alt="Imagem do estacionamento">
-        <img src="../frontend/imagens/pare.png" alt="Imagem do estacionamento">
-        <img src="../frontend/imagens/luzes-de-transito.png" alt="Imagem do estacionamento">
+      <div class="right-images">
+        <img src="../frontend/imagens/pedestre.png" alt="Imagem pedestre">
+        <img src="../frontend/imagens/sinal-de-transito.png" alt="Imagem sinal de trânsito">
+        <img src="../frontend/imagens/pare.png" alt="Imagem sinal de pare">
+        <img src="../frontend/imagens/luzes-de-transito.png" alt="Imagem semáforo">
       </div>
-      <div class="TITULO"> 
+      <div class="title"> 
         <h1>Monitoramento de estacionamento</h1>
       </div>
-      <div class="imagens esquerda">
-        <img src="../frontend/imagens/bicicleta.png" alt="Imagem do estacionamento">
-        <img src="../frontend/imagens/caminhao.png" alt="Imagem do estacionamento">
-        <img src="../frontend/imagens/parking.png" alt="Imagem do estacionamento">
-        <img src="../frontend/imagens/noparking.jpg" alt="Imagem do estacionamento">
+      <div class="left-images">
+        <img src="../frontend/imagens/bicicleta.png" alt="Imagem bicicleta">
+        <img src="../frontend/imagens/caminhao.png" alt="Imagem estacionamento caminhão">
+        <img src="../frontend/imagens/parking.png" alt="Imagem estacionamento">
+        <img src="../frontend/imagens/noparking.jpg" alt="Imagem proibido estacionar">
       </div>
     </header>
     <main>
       <div class="videos">
-        <div class="livres">
+        <div class="available">
           <h2>Livres:</h2>
           <video src="../YOLOV8/yolov8parkingspace-main/parking1.mp4" autoplay muted loop></video>
         </div>
-        <div class="ocupadas">
+        <div class="occupied">
           <h2>Ocupadas:</h2>
           <video src="../YOLOV8/yolov8parkingspace-main/parking1.mp4" autoplay muted loop></video>
         </div>
       </div>  
-      <div class="estacionamento">
-        <p id="dataContainer3"></p>
-        <img id="estacionamento" src="../frontend/imagens/image.png" alt="Imagem do estacionamento">
-        <div class="dados">
-          <p id="bicicleta">0</p>
-          <p id="moto">0</p>
-          <p id="carro">0</p>
-          <p id="caminhao">0</p>
+      <div class="parking-lot">
+        <img id="parking-lot-image" src="../frontend/imagens/image.png" alt="Imagem do estacionamento">
+        <div class="data">
+          <p id="bicycle">0</p>
+          <p id="motorcycle">0</p>
+          <p id="car">0</p>
+          <p id="truck">0</p>
         </div>
-        <img id="faixadepedestre" src="../frontend/imagens/faixadepedestre.png" alt="">
-        <img id="icon" src="../frontend/imagens/usericon.png" alt="">
-        <p id="pedestre">0</p>
+        <img id="crosswalk-image" src="../frontend/imagens/faixadepedestre.png" alt="">
+        <img id="user-icon" src="../frontend/imagens/usericon.png" alt="">
+        <p id="person">0</p>
       </div>
     </main>
     <script src="script.js"></script>

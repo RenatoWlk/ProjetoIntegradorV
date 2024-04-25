@@ -1,9 +1,23 @@
-/* Estilo geral */
+/* ESTILO GERAL */
 body {
     font-family: "Montserrat", sans-serif;
     margin: 0;
     padding: 0;
     background-color: #343434;
+}
+
+/* HEADER */
+header {
+    background-color: #343434;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #000;
+}
+
+header img {
+    height: 70px;
+    width: 70px;
 }
 
 h1 {
@@ -14,22 +28,9 @@ h1 {
     margin: 0;
     padding: 20px;
     background-color: #343434;
-}	
-
-header img{
-    height: 70px;
-    width: 70px;
 }
 
-header {
-    background-color: #343434;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 2px solid #000;
-}
-
-/* Cabeçalho */
+/* VÍDEOS */
 .videos {
     display: flex;
     align-items: center;
@@ -38,7 +39,8 @@ header {
     padding: 20px;
 }
 
-.videos .livres, .videos .ocupadas {
+.videos .available,
+.videos .occupied {
     display: flex;
     flex-direction: column;
 }
@@ -49,49 +51,66 @@ header {
 }
 
 .videos video {
-    display:inline-flex;
+    display: inline-flex;
     width: 300px;
     height: 200px;
-    margin: px;
+    margin: 0;
     border: 20px solid #343434;
     border-color: #888;
     background-color: #ddd;
 }
 
-.estacionamento {
+/* ESTACIONAMENTO */
+.parking-lot {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
     padding: 20px;
     background-color: #343434;
 }
 
-#estacionamento {
+#parking-lot-image {
     width: auto;
     height: auto;
     align-self: flex-start;
-    margin-left: 600px;
-   
+    margin-left: 35%;
 }
 
-#faixadepedestre {
+#crosswalk-image {
     width: auto;
     height: 300px;
-    
-    margin-right: 42%;
     margin-bottom: 2px;
 }
 
-#icon {
+.data {
+    width: auto;
+    height: auto;
+}
+
+.data > p {
+    font-size: large;
+    font-weight: 700;
+    color: #ddd;
+    margin-left: 300%;
+    margin-top: 370%;
+    margin-bottom: 370%;
+}
+
+#person {
+    font-size: large;
+    font-weight: 700;
+    color: #ddd;
+}
+
+#user-icon {
     display: flex;
     width: 100px;
     height: 100px;
-    position: fixed;
     top: 60%;
     right: 0;
-    margin-right: 42%;
 }
 
-footer{
+/* RODAPÉ */
+footer {
     background-color: #343434;
 }
