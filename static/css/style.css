@@ -65,22 +65,24 @@ h1 {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     padding: 20px;
     background-color: #343434;
 }
 
-#parking-lot-image {
-    width: auto;
-    height: auto;
-    align-self: flex-start;
-    margin-left: 35%;
+.parking-lot-image-container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: 0 auto;
 }
 
-#crosswalk-image {
-    width: auto;
-    height: 300px;
-    margin-bottom: 2px;
+.parking-lot-image-part {
+    width: 15%;
+    background-size: cover;
+    margin: 0;
 }
+
 
 .data {
     width: auto;
@@ -113,4 +115,61 @@ h1 {
 /* RODAPÉ */
 footer {
     background-color: #343434;
+}
+
+#data1,
+#data2,
+#data3,
+#data4 {
+  color: #ddd; /* Cor do texto */
+  font-size: 16px; /* Tamanho da fonte */
+  text-align: center; /* Alinhamento do texto */
+  margin: 10px; /* Margem ao redor dos parágrafos */
+}
+
+.console-container {
+  /* Estilos para o container */
+}
+
+.console-data {
+  position: relative; /* Define a posição relativa para o elemento pai */
+  margin-bottom: 10px; /* Adicione margem entre os conjuntos de dados */
+}
+
+.console-data p {
+    color: #ddd;
+    font-size: 16px;
+    text-align: center;
+    margin-right:10%;
+    padding: 10px; /* Preenchimento interno */
+    border: -1px solid #ddd; /* Borda sólida cinza */
+    border-radius: 5px; /* Borda arredondada */
+}
+
+.dispense-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    margin-right: 40%;
+    background-color: #888; /* Cor de fundo */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px; /* Borda arredondada */
+}
+
+.dispense-button:hover {
+    background-color: #ddd; /* Cor de fundo ao passar o mouse */
+}
+
+.console-container{
+    padding: 0px; /* Preenchimento interno */
+    border: 5px solid #ddd; /* Borda sólida cinza */
+    border-radius: 5px; /* Borda arredondada */
 }

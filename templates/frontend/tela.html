@@ -39,18 +39,31 @@
           <video src="../YOLOV8/yolov8parkingspace-main/parking1.mp4" autoplay muted loop></video>
         </div>
       </div>  
-      <div class="parking-lot">
-        <img id="parking-lot-image" src="{{ url_for('static', filename='imagens/image.png') }}" alt="Imagem do estacionamento">
-        <div class="data">
-          <p id="bicycle">0</p>
-          <p id="motorcycle">0</p>
-          <p id="car">0</p>
-          <p id="truck">0</p>
-        </div>
-        <img id="crosswalk-image" src="{{ url_for('static', filename='imagens/faixadepedestre.png') }}" alt="">
-        <img id="user-icon" src="{{ url_for('static', filename='imagens/usericon.png') }}" alt="">
-        <p id="person">0</p>
+
+      <div class="parking-lot-image-container">
+        <!-- Divisões da imagem do estacionamento -->
+        
+        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/BicicletaPark.png') }}" alt=""><p id="data1">Dados 1</p></div>
+        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/motocicletaPark.png') }}"><p id="data1">Dados 2</p></div>
+        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/carroPark.png') }}"><p id="data1">Dados 3</p></div>
+        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/caminhaoPark.png') }}"><p id="data1">Dados 4</p></div>
       </div>
+
+        <div class="console-container">
+          <div class="console-data">
+            <p>Console Data 1</p>
+            <button class="dispense-button">Dispensar</button>
+          </div>
+          <div class="console-data">
+            <p>Console Data 2</p>
+            <button class="dispense-button">Dispensar</button>
+          </div>
+          <div class="console-data">
+            <p>Console Data 3</p>
+            <button class="dispense-button">Dispensar</button>
+          </div>
+          <!-- Adicione mais parágrafos e botões conforme necessário -->
+        </div>
     </main>
   </body> 
 </html>
