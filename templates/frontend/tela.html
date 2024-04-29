@@ -31,12 +31,13 @@
     <main>
       <div class="videos">
         <div class="available">
-          <h2>Livres:</h2>
-          <video src="../YOLOV8/yolov8parkingspace-main/parking1.mp4" autoplay muted loop></video>
+          <h2>Livres: 0</h2>
+
+          <video src="{{ url_for('static', filename='videos/parking1.mp4') }}" autoplay muted loop></video>
         </div>
         <div class="occupied">
-          <h2>Ocupadas:</h2>
-          <video src="../YOLOV8/yolov8parkingspace-main/parking1.mp4" autoplay muted loop></video>
+          <h2>Ocupadas: 0</h2>
+          <video src="{{ url_for('static', filename='videos/parking1.mp4') }}" autoplay muted loop></video>
         </div>
       </div>  
 
@@ -44,12 +45,14 @@
         <!-- Divisões da imagem do estacionamento -->
         
         <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/BicicletaPark.png') }}" alt=""><p id="data1">Dados 1</p></div>
-        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/motocicletaPark.png') }}"><p id="data1">Dados 2</p></div>
-        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/carroPark.png') }}"><p id="data1">Dados 3</p></div>
-        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/caminhaoPark.png') }}"><p id="data1">Dados 4</p></div>
+        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/motocicletaPark.png') }}"><p id="data2">Dados 2</p></div>
+        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/carroPark.png') }}"><p id="data3">Dados 3</p></div>
+        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/caminhaoPark.png') }}"><p id="data4">Dados 4</p></div>
+        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/usericon.png') }}"><p id="data5">Dados 5</p></div>
       </div>
 
         <div class="console-container">
+          <img id="barra-separar" src="{{ url_for('static', filename='imagens/barra-separar.png') }}" alt="">
           <div class="console-data">
             <p>Console Data 1</p>
             <button class="dispense-button">Dispensar</button>
