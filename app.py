@@ -3,11 +3,11 @@
 import cv2
 import json
 from flask import Flask, render_template, jsonify, Response
-from templates.YOLOV8 import basic
+from templates.YOLOV8 import basic, testcount
 
+DADOS_YOLO_PATH = "../ProjetoIntegradorV/templates/frontend/dados_yolo.json"
 VIDEO_PATH = '../ProjetoIntegradorV/static/videos/parking1.mp4'
 CLASSES_PATH = '../ProjetoIntegradorV/templates/YOLOV8/classes.txt'
-DADOS_YOLO_PATH = "../ProjetoIntegradorV/templates/frontend/dados_yolo.json"
 
 app = Flask(__name__)
 
@@ -33,7 +33,8 @@ def process_video():
         classes_file = open(CLASSES_PATH, "r")
         class_list_str = classes_file.read().split("\n")
 
-        processed_frame = basic.process_frame(frame, class_list_str)
+        # processed_frame = basic.process_frame(frame, class_list_str)
+        processed_frame = testcount.process_frame(frame, class_list_str)
         
         _, jpeg = cv2.imencode('.jpg', processed_frame)
         frame_bytes = jpeg.tobytes()
