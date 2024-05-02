@@ -1,5 +1,5 @@
 function carregarDadosYOLO() {
-    fetch('../frontend/dados_yolo.json')
+    fetch('/dados_yolo')
         .then(response => response.json())
         .then(data => {
             document.getElementById("bicycle").innerText = data.bicycle.toString();
@@ -11,4 +11,8 @@ function carregarDadosYOLO() {
         .catch(error => console.error('Erro ao carregar os dados do YOLO:', error));
 }
 
-window.onload = carregarDadosYOLO;
+window.onload = function() {
+    fetch('/process_video')
+    carregarDadosYOLO();
+    setInterval(carregarDadosYOLO, 2000);
+};
