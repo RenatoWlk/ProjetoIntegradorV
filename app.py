@@ -24,17 +24,19 @@ def dados_yolo():
 @app.route('/process_video', methods=['POST'])
 def process_video():
     video = cv2.VideoCapture(VIDEO_PATH)
+    with open(CLASSES_PATH, "r") as classes_file:
+        class_list_str = classes_file.read().split("\n")
+    ret = True
 
-    while True:
+    while ret:
         ret, frame = video.read()
         if not ret:
             break
 
-        classes_file = open(CLASSES_PATH, "r")
-        class_list_str = classes_file.read().split("\n")
-
         # processed_frame = basic.process_frame(frame, class_list_str)
         processed_frame = testcount.process_frame(frame, class_list_str)
+        # basic.draw_area(processed_frame)
+        # testcount.draw_area(processed_frame)
         
         _, jpeg = cv2.imencode('.jpg', processed_frame)
         frame_bytes = jpeg.tobytes()

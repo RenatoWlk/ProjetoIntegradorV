@@ -1,6 +1,6 @@
 import cv2
-import pandas as pd
-import numpy as np
+import pandas
+import numpy
 from ultralytics import YOLO
 import json
 
@@ -8,52 +8,66 @@ import json
 DADOS_YOLO_PATH = '.././ProjetoIntegradorV/templates/frontend/dados_yolo.json'
 
 AREAS = {
-    'area1': [(52,364),(30,417),(73,412),(88,369)],
-    'area2': [(105,353),(86,428),(137,427),(146,358)],
-    'area3': [(159,354),(150,427),(204,425),(203,353)],
-    'area4': [(217,352),(219,422),(273,418),(261,347)],
-    'area5': [(274,345),(286,417),(338,415),(321,345)],
-    'area6': [(336,343),(357,410),(409,408),(382,340)],
-    'area7': [(396,338),(426,404),(479,399),(439,334)],
-    'area8': [(458,333),(494,397),(543,390),(495,330)],
-    'area9': [(511,327),(557,388),(603,383),(549,324)],
-    'area10': [(564,323),(615,381),(654,372),(596,315)],
-    'area11': [(616,316),(666,369),(703,363),(642,312)],
-    'area12': [(674,311),(730,360),(764,355),(707,308)]
+    'area1':[(42,291),(24,334),(58,330),(70,295)],
+    'area2':[(84,282),(69,342),(110,342),(117,286)],
+    'area3':[(127,283),(120,342),(163,340),(162,282)],
+    'area4':[(174,282),(175,338),(218,334),(209,278)],
+    'area5':[(219,276),(229,334),(270,332),(257,276)],
+    'area6':[(269,274),(286,328),(327,326),(306,272)],
+    'area7':[(317,270),(341,323),(383,319),(351,267)],
+    'area8':[(366,266),(395,318),(434,312),(396,264)],
+    'area9':[(409,262),(446,310),(482,306),(439,259)],
+    'area10':[(451,258),(492,305),(523,298),(477,252)],
+    'area11':[(493,253),(533,295),(562,290),(514,250)],
+    'area12':[(539,249),(584,288),(611,284),(566,246)]
 }
+
+CONFIDENCE_THRESHOLD = 0.4
 
 # INICIALIZAÇÃO YOLO
 model = YOLO('yolov8s.pt')
 
-yolo_data = {area: {"person": 0, "bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0} for area in AREAS}
+yolo_data = {area: {"person": 0, "bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0, "occupied": 0} for area in AREAS}
 
 # PROCESSAR FRAME DO VÍDEO
 def process_frame(frame, class_list):
-    frame_resized = cv2.resize(frame, (1020, 500))
+    global yolo_data
+    frame_resized = cv2.resize(frame, (816, 400))
     results = model.predict(frame_resized)
-    detections_df = pd.DataFrame(results[0].boxes.xyxy).astype("float")
+    detections_classes = numpy.ravel(results[0].boxes.cls).astype("int")
+    detections_confidence = numpy.ravel(results[0].boxes.conf).astype("float")
+    detections_boxes_xyxy = pandas.DataFrame(results[0].boxes.xyxy).astype("float")
+    area_detected = False
 
     for area_name, area_points in AREAS.items():
         area_detected = False
-        for index, row in detections_df.iterrows():
+        for index, row in detections_boxes_xyxy.iterrows():
             x1, y1, x2, y2 = map(int, row[:4])
-            detection_index = int(row.name)
+            detection_index = detections_classes[index]
             detected_class = class_list[detection_index]
 
-            if 'person' in detected_class or 'bicycle' in detected_class or 'motorcycle' in detected_class or 'car' in detected_class or 'truck' in detected_class:
-                centerX = (x1 + x2) // 2
-                centerY = (y1 + y2) // 2
-                results_area = cv2.pointPolygonTest(np.array(area_points, np.int32), ((centerX, centerY)), False)
-                if results_area >= 0:
-                    cv2.rectangle(frame_resized, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                    cv2.circle(frame_resized, (centerX, centerY), 3, (0, 0, 255), -1)
-                    yolo_data[area_name][detected_class] += 1
-                    write_data_json()
-                    area_detected = True
+            if detections_confidence[index] >= CONFIDENCE_THRESHOLD:
+                if 'person' in detected_class or 'bicycle' in detected_class or 'motorcycle' in detected_class or 'car' in detected_class or 'truck' in detected_class:
+                    centerX = (x1 + x2) // 2
+                    centerY = (y1 + y2) // 2
+                    results_area = cv2.pointPolygonTest(numpy.array(area_points, numpy.int32), ((centerX, centerY)), False)
+                    if results_area >= 0:
+                        cv2.rectangle(frame_resized, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                        cv2.circle(frame_resized, (centerX, centerY), 3, (0, 0, 255), -1)
+                        yolo_data[area_name][detected_class] = int(results_area)
+                        yolo_data[area_name]["occupied"] = 1
+                        area_detected = True
+                write_data_json()
         if not area_detected:
-            yolo_data[area_name] = {"person": 0, "bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0}
-            write_data_json()           
+            yolo_data[area_name] = {"person": 0, "bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0, "occupied": 0}
+            write_data_json()
     return frame_resized
+
+# DESENHAR ÁREA NO VÍDEO
+def draw_area(frame):
+    for area_name, area_points in AREAS.items():
+        cv2.polylines(frame, [numpy.array(area_points, numpy.int32)], True, (0, 255, 0), 2)
+        cv2.putText(frame, area_name, area_points[0], cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
 
 # ESCREVER OS DADOS NO JSON
 def write_data_json():
