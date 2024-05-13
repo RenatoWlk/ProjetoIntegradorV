@@ -40,7 +40,7 @@ def process_frame(frame, class_list):
                     area_detected = True
             write_data_json()
     if not area_detected:
-        yolo_data = {"person": 0, "bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0}
+        yolo_data = { "bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0}
         write_data_json() 
     return frame_resized
 

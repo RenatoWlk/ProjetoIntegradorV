@@ -10,18 +10,16 @@ function processData(data){
     let totalMotorcycle = 0;
     let totalCar = 0;
     let totalTruck = 0;
-    let totalPerson = 0;
     let available = 12;
     let occupied = 0;
 
     for(let area in data) {
-        const { bicycle, motorcycle, car, truck, person, occupied: isOccupied } = data[area];
+        const { bicycle, motorcycle, car, truck, occupied: isOccupied } = data[area];
 
         totalBicycle += bicycle;
         totalMotorcycle += motorcycle;
         totalCar += car;
         totalTruck += truck;
-        totalPerson += person;
 
         if(isOccupied){
             available--;
@@ -29,15 +27,14 @@ function processData(data){
         }
     }
 
-    updateElements(totalBicycle, totalMotorcycle, totalCar, totalTruck, totalPerson, available, occupied)
+    updateElements(totalBicycle, totalMotorcycle, totalCar, totalTruck, available, occupied)
 }
 
-function updateElements(bicycle, motorcycle, car, truck, person, available, occupied){
+function updateElements(bicycle, motorcycle, car, truck, available, occupied){
     document.getElementById("bicycle").innerText = bicycle.toString();
     document.getElementById("motorcycle").innerText = motorcycle.toString();
     document.getElementById("car").innerText = car.toString();
     document.getElementById("truck").innerText = truck.toString();
-    document.getElementById("person").innerText = person.toString();
     document.getElementById("available-text").innerText = "Livres: " + available
     document.getElementById("occupied-text").innerText = "Ocupadas: " + occupied
 }

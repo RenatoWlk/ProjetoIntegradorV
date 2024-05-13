@@ -27,7 +27,7 @@ CONFIDENCE_THRESHOLD = 0.4
 # INICIALIZAÇÃO YOLO
 model = YOLO('yolov8s.pt')
 
-yolo_data = {area: {"person": 0, "bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0, "occupied": 0} for area in AREAS}
+yolo_data = {area: {"bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0, "occupied": 0} for area in AREAS}
 
 # PROCESSAR FRAME DO VÍDEO
 def process_frame(frame, class_list):
@@ -47,7 +47,7 @@ def process_frame(frame, class_list):
             detected_class = class_list[detection_index]
 
             if detections_confidence[index] >= CONFIDENCE_THRESHOLD:
-                if 'person' in detected_class or 'bicycle' in detected_class or 'motorcycle' in detected_class or 'car' in detected_class or 'truck' in detected_class:
+                if 'bicycle' in detected_class or 'motorcycle' in detected_class or 'car' in detected_class or 'truck' in detected_class:
                     centerX = (x1 + x2) // 2
                     centerY = (y1 + y2) // 2
                     results_area = cv2.pointPolygonTest(numpy.array(area_points, numpy.int32), ((centerX, centerY)), False)
@@ -59,7 +59,7 @@ def process_frame(frame, class_list):
                         area_detected = True
                 write_data_json()
         if not area_detected:
-            yolo_data[area_name] = {"person": 0, "bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0, "occupied": 0}
+            yolo_data[area_name] = {"bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0, "occupied": 0}
             write_data_json()
     return frame_resized
 
