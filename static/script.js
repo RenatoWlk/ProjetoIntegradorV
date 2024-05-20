@@ -1,4 +1,4 @@
-function loadYoloData() {
+function loadYoloData(){
     fetch('/dados_yolo')
         .then(response => response.json())
         .then(data => processData(data))
@@ -12,6 +12,7 @@ function processData(data){
     let totalTruck = 0;
     let available = 12;
     let occupied = 0;
+    let consoleData = [];
 
     for(let area in data) {
         const { bicycle, motorcycle, car, truck, occupied: isOccupied } = data[area];
@@ -24,10 +25,30 @@ function processData(data){
         if(isOccupied){
             available--;
             occupied++;
+
+            vehicle = getVehicle(bicycle, motorcycle, car)
+            areaNumber = area.substring(4)
+            consoleData.push(`O veículo ${vehicle} ocupou a vaga ${areaNumber}`);
         }
     }
 
     updateElements(totalBicycle, totalMotorcycle, totalCar, totalTruck, available, occupied)
+    updateConsole(consoleData);
+}
+
+function getVehicle(bicycle, motorcycle, car){
+    if(car === 1){
+        return "Carro"
+    }
+    else if(motorcycle === 1){
+        return "Moto"
+    }
+    else if(bicycle === 1){
+        return "Bicicleta"
+    }
+    else{
+        return "Caminhão"
+    }
 }
 
 function updateElements(bicycle, motorcycle, car, truck, available, occupied){
@@ -37,6 +58,22 @@ function updateElements(bicycle, motorcycle, car, truck, available, occupied){
     document.getElementById("truck").innerText = truck.toString();
     document.getElementById("available-text").innerText = "Livres: " + available
     document.getElementById("occupied-text").innerText = "Ocupadas: " + occupied
+}
+
+function updateConsole(consoleData){
+    if(consoleData.length === 0){
+        clearConsole("Não há veículos estacionados no momento.")
+        return 
+    }
+    else{
+        const consoleDataTxt = document.getElementById("console-data-txt");
+        consoleDataTxt.innerText = consoleData.join("\n");
+    }
+}
+
+function clearConsole(message){
+    const consoleDataTxt = document.getElementById("console-data-txt");
+    consoleDataTxt.innerText = message.toString()
 }
 
 /*
@@ -56,7 +93,7 @@ function loadYoloData() {
 
 let refreshIntervalId;
 
-function startVideo() {
+function startVideo(){
     fetch('/process_video')
         .then(() => {
             loadYoloData();
@@ -66,10 +103,10 @@ function startVideo() {
 }
 
 // Precisa implementar um jeito de usar isso para parar de puxar os dados do yolo quando não tiver tocando o "vídeo"
-function stopVideo() {
+function stopVideo(){
     clearInterval(refreshIntervalId)
 }
 
-window.onload = function() {
+window.onload = function(){
     startVideo();
 };

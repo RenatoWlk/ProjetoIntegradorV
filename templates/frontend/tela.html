@@ -45,7 +45,7 @@
           <h2 id="occupied-text">Ocupadas: 0</h2>
           <img id="occupied-video" src="{{ url_for('video_feed') }}" alt="Vídeo Ocupado">
         </div>
-      </div>  
+      </div>
 
       <div class="parking-lot-image-container">
         <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/BicicletaPark.png') }}" alt=""><p id="bicycle">Dados 1</p></div>
@@ -61,28 +61,8 @@
     
       <div class="console-container">
         <div class="console-data">
-          <p id="console-data-1-txt">Console Data 1</p>
-          <button class="dispense-button" id="dispense-button-1">Dispensar</button>
-        </div>
-        <div class="console-data">
-          <p id="console-data-2-txt">Console Data 2</p>
-          <button class="dispense-button" id="dispense-button-2">Dispensar</button>
-        </div>
-        <div class="console-data">
-          <p id="console-data-3-txt">Console Data 3</p>
-          <button class="dispense-button" id="dispense-button-3">Dispensar</button>
-        </div>
-        <div class="console-data">
-          <p id="console-data-1-txt">Console Data 4</p>
-          <button class="dispense-button" id="dispense-button-1">Dispensar</button>
-        </div>
-        <div class="console-data">
-          <p id="console-data-2-txt">Console Data 5</p>
-          <button class="dispense-button" id="dispense-button-2">Dispensar</button>
-        </div>
-        <div class="console-data">
-          <p id="console-data-3-txt">Console Data 6</p>
-          <button class="dispense-button" id="dispense-button-3">Dispensar</button>
+          <p id="console-data-txt">Console Data 1</p>
+          <button class="dispense-button" id="dispense-button" onclick="clearConsole('')">Dispensar</button>
         </div>
       </div>
 
