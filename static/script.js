@@ -1,8 +1,25 @@
+const TOTAL_PARKING_SPOTS = 12;
+const UPDATE_INTERVAL = 1000; // Tempo em ms
+let refreshIntervalId;
+
+function startVideo(){
+    fetch('/process_video')
+        .then(() => {
+            loadYoloData();
+            refreshIntervalId = setInterval(loadYoloData, UPDATE_INTERVAL);
+        })
+        .catch(error => console.error('Erro ao carregar o vídeo: ', error));
+}
+
+function stopVideo(){
+    clearInterval(refreshIntervalId)
+}
+
 function loadYoloData(){
     fetch('/dados_yolo')
         .then(response => response.json())
-        .then(data => processData(data))
-        .catch(error => console.error('Erro ao carregar os dados do YOLO:', error));
+        .then(processData)
+        .catch(error => console.error('Erro ao carregar os dados do YOLO: ', error));
 }
 
 function processData(data){
@@ -10,7 +27,7 @@ function processData(data){
     let totalMotorcycle = 0;
     let totalCar = 0;
     let totalTruck = 0;
-    let available = 12;
+    let available = TOTAL_PARKING_SPOTS;
     let occupied = 0;
     let consoleData = [];
 
@@ -26,8 +43,8 @@ function processData(data){
             available--;
             occupied++;
 
-            vehicle = getVehicle(bicycle, motorcycle, car)
-            areaNumber = area.substring(4)
+            const vehicle = getVehicle(bicycle, motorcycle, car)
+            const areaNumber = area.substring(4)
             consoleData.push(`O veículo ${vehicle} ocupou a vaga ${areaNumber}`);
         }
     }
@@ -37,18 +54,10 @@ function processData(data){
 }
 
 function getVehicle(bicycle, motorcycle, car){
-    if(car === 1){
-        return "Carro"
-    }
-    else if(motorcycle === 1){
-        return "Moto"
-    }
-    else if(bicycle === 1){
-        return "Bicicleta"
-    }
-    else{
-        return "Caminhão"
-    }
+    if (car === 1) return "Carro";
+    if (motorcycle === 1) return "Moto";
+    if (bicycle === 1) return "Bicicleta";
+    return "Caminhão";
 }
 
 function updateElements(bicycle, motorcycle, car, truck, available, occupied){
@@ -61,22 +70,21 @@ function updateElements(bicycle, motorcycle, car, truck, available, occupied){
 }
 
 function updateConsole(consoleData){
-    if(consoleData.length === 0){
-        clearConsole("Não há veículos estacionados no momento.")
-        return 
-    }
-    else{
-        const consoleDataTxt = document.getElementById("console-data-txt");
+    const consoleDataTxt = document.getElementById("console-data-txt");
+    if (consoleData.length === 0) {
+        clearConsole("Não há veículos estacionados no momento.");
+    } else {
         consoleDataTxt.innerText = consoleData.join("\n");
     }
 }
 
 function clearConsole(message){
-    const consoleDataTxt = document.getElementById("console-data-txt");
-    consoleDataTxt.innerText = message.toString()
+    document.getElementById("console-data-txt").innerText = message.toString();
 }
 
-/*
+window.onload = startVideo;
+
+/* FUNÇÃO loadYoloData PARA SOMENTE UMA ÁREA NO ESTACIONAMENTO
 function loadYoloData() {
     fetch('/dados_yolo')
         .then(response => response.json())
@@ -90,23 +98,3 @@ function loadYoloData() {
         .catch(error => console.error('Erro ao carregar dados do YOLO:', error))
 }
 */
-
-let refreshIntervalId;
-
-function startVideo(){
-    fetch('/process_video')
-        .then(() => {
-            loadYoloData();
-            refreshIntervalId = setInterval(loadYoloData, 1000);
-        })
-        .catch(error => console.error('Erro ao carregar o vídeo:', error));
-}
-
-// Precisa implementar um jeito de usar isso para parar de puxar os dados do yolo quando não tiver tocando o "vídeo"
-function stopVideo(){
-    clearInterval(refreshIntervalId)
-}
-
-window.onload = function(){
-    startVideo();
-};

@@ -16,54 +16,62 @@
 
       <div class="right-images">
         <img src="{{ url_for('static', filename='imagens/pedestre-icone.png') }}" alt="Imagem pedestre">
-        <img src="{{ url_for('static', filename='imagens/bicicleta-icone.png') }}" alt="Imagem sinal de trânsito">
-        <img src="{{ url_for('static', filename='imagens/onibus-icone.png') }}" alt="Imagem sinal de pare">
-        <img src="{{ url_for('static', filename='imagens/caminhao-icone.png') }}" alt="Imagem semáforo">
+        <img src="{{ url_for('static', filename='imagens/bicicleta-icone.png') }}" alt="Imagem bicicleta">
+        <img src="{{ url_for('static', filename='imagens/onibus-icone.png') }}" alt="Imagem ônibus">
+        <img src="{{ url_for('static', filename='imagens/caminhao-icone.png') }}" alt="Imagem caminhão">
       </div>
 
       <div class="title"> 
-        <h1>Monitoramento de estacionamento</h1>
+        <h1>Monitoramento de Estacionamento</h1>
       </div>
 
       <div class="left-images">
-        <img src="{{ url_for('static', filename='imagens/E-icone.png') }}" alt="Imagem bicicleta">
-        <img src="{{ url_for('static', filename='imagens/buzina-icone.png') }}" alt="Imagem estacionamento caminhão">
-        <img src="{{ url_for('static', filename='imagens/velmax-icone.png') }}" alt="Imagem estacionamento">
-        <img src="{{ url_for('static', filename='imagens/Pare-icone.png') }}" alt="Imagem proibido estacionar">
+        <img src="{{ url_for('static', filename='imagens/E-icone.png') }}" alt="Imagem estacionar">
+        <img src="{{ url_for('static', filename='imagens/buzina-icone.png') }}" alt="Imagem buzina">
+        <img src="{{ url_for('static', filename='imagens/velmax-icone.png') }}" alt="Imagem velocidade máxima">
+        <img src="{{ url_for('static', filename='imagens/Pare-icone.png') }}" alt="Imagem pare">
       </div>
 
     </header>
 
     <main>
 
-      <div class="videos">
-        <div class="available">
+      <div class="videos-container">
+        <div class="videos-text">
           <h2 id="available-text">Livres: 12</h2>
-          <img id="available-video" src="{{ url_for('video_feed') }}" alt="Vídeo Disponível">
-        </div>
-        <div class="occupied">
           <h2 id="occupied-text">Ocupadas: 0</h2>
-          <img id="occupied-video" src="{{ url_for('video_feed') }}" alt="Vídeo Ocupado">
+        </div>
+        <div class="videos">
+          <img id="video-1" src="{{ url_for('video_feed') }}" alt="Vídeo">          
         </div>
       </div>
 
       <div class="parking-lot-image-container">
-        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/BicicletaPark.png') }}" alt=""><p id="bicycle">Dados 1</p></div>
-        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/motocicletaPark.png') }}"><p id="motorcycle">Dados 2</p></div>
-        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/carroPark.png') }}"><p id="car">Dados 3</p></div>
-        <div class="parking-lot-image-part"><img src="{{ url_for('static', filename='imagens/caminhaoPark.png') }}"><p id="truck">Dados 4</p></div>
-        
+        <div class="parking-lot-image-part">
+          <img src="{{ url_for('static', filename='imagens/BicicletaPark.png') }}" alt="Imagem bicicleta dados">
+          <p id="bicycle">Dados 1</p>
+        </div>
+        <div class="parking-lot-image-part">
+          <img src="{{ url_for('static', filename='imagens/motocicletaPark.png') }}" alt="Imagem motocicleta dados">
+          <p id="motorcycle">Dados 2</p>
+        </div>
+        <div class="parking-lot-image-part">
+          <img src="{{ url_for('static', filename='imagens/carroPark.png') }}" alt="Imagem carro dados">
+          <p id="car">Dados 3</p>
+        </div>
+        <div class="parking-lot-image-part">
+          <img src="{{ url_for('static', filename='imagens/caminhaoPark.png') }}" alt="Imagem caminhão dados">
+          <p id="truck">Dados 4</p>
+        </div>
       </div>
 
       <div class="barra-separar-container">
-        <img id="barra-separar" src="{{ url_for('static', filename='imagens/barra-separar.png') }}" alt="">
+        <img id="barra-separar" src="{{ url_for('static', filename='imagens/barra-separar.png') }}" alt="Barra">
       </div>
     
       <div class="console-container">
-        <div class="console-data">
-          <p id="console-data-txt">Console Data 1</p>
-          <button class="dispense-button" id="dispense-button" onclick="clearConsole('')">Dispensar</button>
-        </div>
+        <p id="console-data-txt">Console Data</p>
+        <button class="dispense-button" id="dispense-button" onclick="clearConsole('')">Dispensar</button>
       </div>
 
     </main>
