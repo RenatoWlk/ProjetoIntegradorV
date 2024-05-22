@@ -74,7 +74,7 @@ function updateConsole(consoleData){
     if (consoleData.length === 0) {
         clearConsole("Não há veículos estacionados no momento.");
     } else {
-        consoleDataTxt.innerText = consoleData.join("\n");
+        consoleDataTxt.innerText = consoleData.join("\n \n");
     }
 }
 

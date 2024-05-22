@@ -11,31 +11,24 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
   </head>
   <body>
-    
     <header>
-
       <div class="right-images">
         <img src="{{ url_for('static', filename='imagens/pedestre-icone.png') }}" alt="Imagem pedestre">
         <img src="{{ url_for('static', filename='imagens/bicicleta-icone.png') }}" alt="Imagem bicicleta">
         <img src="{{ url_for('static', filename='imagens/onibus-icone.png') }}" alt="Imagem ônibus">
         <img src="{{ url_for('static', filename='imagens/caminhao-icone.png') }}" alt="Imagem caminhão">
       </div>
-
       <div class="title"> 
         <h1>Monitoramento de Estacionamento</h1>
       </div>
-
       <div class="left-images">
         <img src="{{ url_for('static', filename='imagens/E-icone.png') }}" alt="Imagem estacionar">
         <img src="{{ url_for('static', filename='imagens/buzina-icone.png') }}" alt="Imagem buzina">
         <img src="{{ url_for('static', filename='imagens/velmax-icone.png') }}" alt="Imagem velocidade máxima">
         <img src="{{ url_for('static', filename='imagens/Pare-icone.png') }}" alt="Imagem pare">
       </div>
-
     </header>
-
     <main>
-
       <div class="videos-container">
         <div class="videos-text">
           <h2 id="available-text">Livres: 12</h2>
@@ -45,7 +38,13 @@
           <img id="video-1" src="{{ url_for('video_feed') }}" alt="Vídeo">          
         </div>
       </div>
-
+      <div class="upload-container">
+        <form action="{{ url_for('upload_video') }}" method="post" enctype="multipart/form-data">
+          <label for="file">Selecione um vídeo para upload:</label>
+          <input type="file" name="file" id="file">
+          <input type="submit" value="Upload">
+        </form>
+      </div>
       <div class="parking-lot-image-container">
         <div class="parking-lot-image-part">
           <img src="{{ url_for('static', filename='imagens/BicicletaPark.png') }}" alt="Imagem bicicleta dados">
@@ -64,17 +63,13 @@
           <p id="truck">Dados 4</p>
         </div>
       </div>
-
       <div class="barra-separar-container">
         <img id="barra-separar" src="{{ url_for('static', filename='imagens/barra-separar.png') }}" alt="Barra">
       </div>
-    
       <div class="console-container">
         <p id="console-data-txt">Console Data</p>
         <button class="dispense-button" id="dispense-button" onclick="clearConsole('')">Dispensar</button>
       </div>
-
     </main>
-
   </body> 
 </html>
