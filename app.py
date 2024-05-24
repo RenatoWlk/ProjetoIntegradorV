@@ -5,19 +5,16 @@ import cv2
 import json
 from flask import Flask, render_template, jsonify, Response, request, redirect, url_for
 from werkzeug.utils import secure_filename
-from templates.YOLOV8 import basic, testcount
+from templates.YOLOV8 import basic, yolo_analise_parking
 
 DADOS_YOLO_PATH = "../ProjetoIntegradorV/templates/frontend/dados_yolo.json"
-VIDEO_PATH = '../ProjetoIntegradorV/static/videos/parking1.mp4'
 UPLOAD_FOLDER = '../ProjetoIntegradorV/static/videos'
 ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov'}
 CLASSES_PATH = '../ProjetoIntegradorV/templates/YOLOV8/classes.txt'
+video_path = '../ProjetoIntegradorV/static/videos/estacionamento_video.mp4'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
 def index():
@@ -35,7 +32,7 @@ def process_video():
         class_list_str = classes_file.read().split("\n")
 
     while True:
-        video = cv2.VideoCapture(VIDEO_PATH)
+        video = cv2.VideoCapture(video_path)
         ret = True
 
         while ret:
@@ -44,9 +41,9 @@ def process_video():
                 break
 
             # processed_frame = basic.process_frame(frame, class_list_str)
-            processed_frame = testcount.process_frame(frame, class_list_str)
+            processed_frame = yolo_analise_parking.process_frame(frame, class_list_str)
             # basic.draw_area(processed_frame)
-            # testcount.draw_area(processed_frame)
+            yolo_analise_parking.draw_area(processed_frame)
             
             _, jpeg = cv2.imencode('.jpg', processed_frame)
             frame_bytes = jpeg.tobytes()
@@ -60,6 +57,9 @@ def process_video():
 def video_feed():
     return Response(process_video(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/upload_video', methods=['GET', 'POST'])
 def upload_video():
     if request.method == 'POST':
@@ -71,10 +71,10 @@ def upload_video():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            global VIDEO_PATH
-            VIDEO_PATH = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            global video_path
+            video_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             return redirect(url_for('index'))
-    return render_template('frontend/upload.html')
+    return render_template('frontend/tela.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

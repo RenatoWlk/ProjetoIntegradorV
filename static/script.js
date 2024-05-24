@@ -1,4 +1,4 @@
-const TOTAL_PARKING_SPOTS = 12;
+const TOTAL_PARKING_SPOTS = 17;
 const UPDATE_INTERVAL = 1000; // Tempo em ms
 let refreshIntervalId;
 
@@ -72,9 +72,9 @@ function updateElements(bicycle, motorcycle, car, truck, available, occupied){
 function updateConsole(consoleData){
     const consoleDataTxt = document.getElementById("console-data-txt");
     if (consoleData.length === 0) {
-        clearConsole("Não há veículos estacionados no momento.");
+        clearConsole("Nenhum veículo no momento.");
     } else {
-        consoleDataTxt.innerText = consoleData.join("\n \n");
+        consoleDataTxt.innerText = consoleData.join("\n");
     }
 }
 
