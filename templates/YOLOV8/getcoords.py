@@ -1,6 +1,6 @@
 import cv2
 
-VIDEO_PATH = '../ProjetoIntegradorV/static/videos/video_estacionamento.mp4'
+VIDEO_PATH = '../ProjetoIntegradorV/static/videos/estacionamento_enzo.mp4'
 
 def get_coordinates_click(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
