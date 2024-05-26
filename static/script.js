@@ -1,4 +1,4 @@
-const TOTAL_PARKING_SPOTS = 6;
+const TOTAL_PARKING_SPOTS = 17;
 const UPDATE_INTERVAL = 1000; // Tempo em ms
 let refreshIntervalId;
 

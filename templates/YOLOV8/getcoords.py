@@ -1,6 +1,7 @@
 import cv2
 
-VIDEO_PATH = './ProjetoIntegradorV/static/videos/estacionamento_enzo.mp4'
+#VIDEO_PATH = './ProjetoIntegradorV/static/videos/estacionamento_video.mp4'
+VIDEO_PATH = 'static/videos/estacionamento_video.mp4'
 
 def get_coordinates_click(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -17,6 +18,10 @@ def get_video_coordinates(video_path):
 
     ret, frame = cap.read()
     cap.release()
+    
+    if not ret or frame is None:
+        print("Erro ao ler o quadro do vídeo")
+        return
 
     resized_frame = cv2.resize(frame, (816, 400))
 
