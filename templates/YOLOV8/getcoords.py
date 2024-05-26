@@ -1,6 +1,6 @@
 import cv2
 
-VIDEO_PATH = '../ProjetoIntegradorV/static/videos/estacionamento_enzo.mp4'
+VIDEO_PATH = './ProjetoIntegradorV/static/videos/estacionamento_enzo.mp4'
 
 def get_coordinates_click(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -12,7 +12,7 @@ def get_video_coordinates(video_path):
     if not cap.isOpened():
         print("Erro ao abrir o vídeo")
 
-    frame_number = 5500
+    frame_number = 100
     cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
 
     ret, frame = cap.read()
