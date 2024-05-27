@@ -11,7 +11,9 @@ DADOS_YOLO_PATH = "../ProjetoIntegradorV/templates/frontend/dados_yolo.json"
 UPLOAD_FOLDER = '../ProjetoIntegradorV/static/videos'
 ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov'}
 CLASSES_PATH = '../ProjetoIntegradorV/templates/YOLOV8/classes.txt'
-video_path = '../ProjetoIntegradorV/static/videos/estacionamento_video.mp4'
+video_path = '../ProjetoIntegradorV/static/videos/parking1.mp4'
+# video_path = '../ProjetoIntegradorV/static/videos/estacionamento_video.mp4'
+# video_path = '../ProjetoIntegradorV/static/videos/estacionamento_enzo.mp4'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
