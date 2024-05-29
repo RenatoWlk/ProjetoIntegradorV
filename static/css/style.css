@@ -1,9 +1,9 @@
 /* VARIÁVEIS PARA CORES E TAMANHOS */
 :root {
     --primary-color: #343434;
-    --secondary-color: #888;
-    --highlight-color: #ddd;
-    --border-color: #000;
+    --secondary-color: #8C8C8C;
+    --highlight-color: #FFFFFF;
+    --border-color: #222F40;
     --font-family: "Montserrat", sans-serif;
     --font-size-small: 16px;
     --font-size-medium: 18px;
@@ -28,7 +28,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 3px solid var(--secondary-color);
 }
 
 header img {
@@ -154,7 +154,7 @@ footer {
     padding: var(--padding-small) var(--padding-medium);
     text-align: center;
     text-decoration: none;
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-medium);
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;

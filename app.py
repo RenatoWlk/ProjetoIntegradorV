@@ -5,18 +5,20 @@ import cv2
 import json
 from flask import Flask, render_template, jsonify, Response, request, redirect, url_for
 from werkzeug.utils import secure_filename
-from templates.YOLOV8 import basic, yolo_analise_parking
+from templates.YOLOV8 import yolo_analise_parking
+from threading import Thread, Event
 
 DADOS_YOLO_PATH = "../ProjetoIntegradorV/templates/frontend/dados_yolo.json"
-UPLOAD_FOLDER = '../ProjetoIntegradorV/static/videos'
-ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov'}
 CLASSES_PATH = '../ProjetoIntegradorV/templates/YOLOV8/classes.txt'
-video_path = '../ProjetoIntegradorV/static/videos/parking1.mp4'
-# video_path = '../ProjetoIntegradorV/static/videos/estacionamento_video.mp4'
-# video_path = '../ProjetoIntegradorV/static/videos/estacionamento_enzo.mp4'
+UPLOAD_FOLDER = '../ProjetoIntegradorV/static/videos'
+MAX_CONTENT_LENGTH = 100 * 1024 * 1024  # 100 MB
+ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
+
+video_path = '../ProjetoIntegradorV/static/videos/estacionamento_puc.mp4'
 
 @app.route('/')
 def index():
@@ -29,35 +31,31 @@ def dados_yolo():
     return jsonify(yolo_data)
 
 @app.route('/process_video', methods=['POST'])
-def process_video():
+def process_video(stop_event):
     with open(CLASSES_PATH, "r") as classes_file:
         class_list_str = classes_file.read().split("\n")
+    video = cv2.VideoCapture(video_path)
+    
+    while not stop_event.is_set():
+        ret, frame = video.read()
+        if not ret:
+            break
 
-    while True:
-        video = cv2.VideoCapture(video_path)
-        ret = True
+        processed_frame = yolo_analise_parking.process_frame(frame, class_list_str)
+        _, jpeg = cv2.imencode('.jpg', processed_frame)
+        frame_bytes = jpeg.tobytes()
 
-        while ret:
-            ret, frame = video.read()
-            if not ret:
-                break
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
 
-            # processed_frame = basic.process_frame(frame, class_list_str)
-            processed_frame = yolo_analise_parking.process_frame(frame, class_list_str)
-            # basic.draw_area(processed_frame)
-            yolo_analise_parking.draw_area(processed_frame)
-            
-            _, jpeg = cv2.imencode('.jpg', processed_frame)
-            frame_bytes = jpeg.tobytes()
-
-            yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
-
-        video.release()
+    video.release()
 
 @app.route('/video_feed')
 def video_feed():
-    return Response(process_video(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    stop_event = Event()
+    video_thread = Thread(target=process_video, args=(stop_event,))
+    video_thread.start()
+    return Response(process_video(stop_event), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

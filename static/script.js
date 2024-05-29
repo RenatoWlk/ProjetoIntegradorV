@@ -1,7 +1,5 @@
-const TOTAL_PARKING_SPOTS = 12;
-//const TOTAL_PARKING_SPOTS = 17;
-//const TOTAL_PARKING_SPOTS = 6;
-const UPDATE_INTERVAL = 1000; // Tempo em ms
+const TOTAL_PARKING_SPOTS = 19;
+const UPDATE_INTERVAL = 3000; // Tempo em ms
 let refreshIntervalId;
 
 function startVideo(){
