@@ -5,7 +5,7 @@ import json
 from flask import Flask, render_template, jsonify, Response, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
-from templates.YOLOV8 import basic, yolo_analise_parking
+from templates.YOLOV8 import yolo_analise_parking
 
 DADOS_YOLO_PATH = "../ProjetoIntegradorV/templates/frontend/dados_yolo.json"
 UPLOAD_FOLDER = '../ProjetoIntegradorV/static/videos'
@@ -46,7 +46,7 @@ def dados_yolo():
 
 @app.route('/process_video', methods=['POST'])
 def process_video():
-    intervalo_segundos = 5
+    intervalo_segundos = 3
     frame_count = 0
     with open(CLASSES_PATH, "r") as classes_file:
         class_list_str = classes_file.read().split("\n")

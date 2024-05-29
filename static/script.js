@@ -1,6 +1,6 @@
 const TOTAL_PARKING_SPOTS = 19;
 const UPDATE_INTERVAL_YOLO_DATA = 3000; // Tempo em ms
-const UPDATE_INTERVAL_CHART_DATA = 5000; // Tempo em ms
+const UPDATE_INTERVAL_CHART_DATA = 3000; // Tempo em ms
 const ctx = document.getElementById('occupancyChart').getContext('2d');
 
 function startVideo(){
@@ -149,12 +149,12 @@ function drawChart(labels, data) {
         const y = canvas.height - padding - data[i] * yStep;
         ctx.lineTo(x, y);
     }
-    ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.7)';
     ctx.lineWidth = 2;
     ctx.stroke();
 
     // Points
-    ctx.fillStyle = 'rgba(75, 192, 192, 1)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
     for (let i = 0; i < data.length; i++) {
         const x = padding + i * xStep;
         const y = canvas.height - padding - data[i] * yStep;
@@ -164,7 +164,7 @@ function drawChart(labels, data) {
     }
 
     // Labels
-    const labelStep = Math.ceil(labels.length / 10);
+    const labelStep = Math.ceil(labels.length / 11);
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
