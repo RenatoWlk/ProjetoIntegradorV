@@ -60,6 +60,7 @@ h1 {
     justify-content: center;
     background-color: var(--primary-color);
     padding: var(--padding-medium);
+    
 }
 
 .videos-text {
@@ -78,6 +79,7 @@ h1 {
     margin: 0;
     border: 20px solid var(--secondary-color);
     background-color: var(--highlight-color);
+    border-radius: 10px;
 }
 
 /* DADOS DO ESTACIONAMENTO */
