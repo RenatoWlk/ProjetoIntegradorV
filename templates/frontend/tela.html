@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Park View - Monitoramento de estacionamento</title>
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
   </head>
   <body>
     <header>
@@ -83,6 +82,11 @@
         </div>
         
       </footer>
+
+      <div class="container">
+        <canvas id="occupancyChart" width="1000" height="500"></canvas>
+      </div>
     </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
   </body> 
 </html>

@@ -86,6 +86,7 @@ model = YOLO('yolov8s.pt')
 
 # PROCESSAR FRAME DO VÍDEO
 def process_frame(frame, class_list):
+    qtdOccupied = 0
     yolo_data = {area: {"bicycle": 0, "motorcycle": 0, "car": 0, "truck": 0, "occupied": 0} for area in AREAS}
     frame_resized = cv2.resize(frame, FRAME_SIZE)
     results = model.predict(frame_resized)
@@ -103,9 +104,10 @@ def process_frame(frame, class_list):
                 if any(vehicle_type in detected_class for vehicle_type in ['bicycle', 'motorcycle', 'car', 'truck']):
                     update_yolo_data(yolo_data, frame_resized, area_name, area_points, detected_class, (x1, y1), (x2, y2))
 
+    qtdOccupied = count_occupied(yolo_data)
     draw_area(frame_resized, yolo_data)
     write_data_json(yolo_data)
-    return frame_resized
+    return frame_resized, qtdOccupied
 
 def update_yolo_data(yolo_data, frame_resized, area_name, area_points, detected_class, top_left_xy, bottom_right_xy):
     centerX = (top_left_xy[0] + bottom_right_xy[0]) // 2
@@ -116,6 +118,13 @@ def update_yolo_data(yolo_data, frame_resized, area_name, area_points, detected_
         cv2.circle(frame_resized, (centerX, centerY), 3, (0, 0, 255), 2)
         yolo_data[area_name][detected_class] = int(results_area)
         yolo_data[area_name]["occupied"] = 1
+
+def count_occupied(yolo_data):
+    qtd = 0
+    for _, area_info in yolo_data.items():
+        if area_info["occupied"] == 1:
+            qtd += 1
+    return qtd
 
 # DESENHAR ÁREA NO VÍDEO
 def draw_area(frame, yolo_data):

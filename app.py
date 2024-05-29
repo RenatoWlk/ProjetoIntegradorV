@@ -1,24 +1,38 @@
-# pip install flask
-# flask run
+from datetime import datetime, timezone
 import os
 import cv2
 import json
 from flask import Flask, render_template, jsonify, Response, request, redirect, url_for
 from werkzeug.utils import secure_filename
-from templates.YOLOV8 import yolo_analise_parking
-from threading import Thread, Event
+from flask_sqlalchemy import SQLAlchemy
+from templates.YOLOV8 import basic, yolo_analise_parking
 
 DADOS_YOLO_PATH = "../ProjetoIntegradorV/templates/frontend/dados_yolo.json"
-CLASSES_PATH = '../ProjetoIntegradorV/templates/YOLOV8/classes.txt'
 UPLOAD_FOLDER = '../ProjetoIntegradorV/static/videos'
-MAX_CONTENT_LENGTH = 100 * 1024 * 1024  # 100 MB
 ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov'}
+CLASSES_PATH = '../ProjetoIntegradorV/templates/YOLOV8/classes.txt'
+video_path = '../ProjetoIntegradorV/static/videos/estacionamento_puc.mp4'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parking.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-video_path = '../ProjetoIntegradorV/static/videos/estacionamento_puc.mp4'
+class ParkingOccupancy(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc).replace(tzinfo=None))
+    occupied_spaces = db.Column(db.Integer)
+
+with app.app_context():
+    db.create_all()
+
+def register_data(occupied_count):
+    occupancy_record = ParkingOccupancy(
+        occupied_spaces=occupied_count,
+    )
+    db.session.add(occupancy_record)
+    db.session.commit()
 
 @app.route('/')
 def index():
@@ -31,31 +45,41 @@ def dados_yolo():
     return jsonify(yolo_data)
 
 @app.route('/process_video', methods=['POST'])
-def process_video(stop_event):
+def process_video():
+    intervalo_segundos = 5
+    frame_count = 0
     with open(CLASSES_PATH, "r") as classes_file:
         class_list_str = classes_file.read().split("\n")
-    video = cv2.VideoCapture(video_path)
-    
-    while not stop_event.is_set():
-        ret, frame = video.read()
-        if not ret:
-            break
 
-        processed_frame = yolo_analise_parking.process_frame(frame, class_list_str)
-        _, jpeg = cv2.imencode('.jpg', processed_frame)
-        frame_bytes = jpeg.tobytes()
+    while True:
+        video = cv2.VideoCapture(video_path)
+        ret = True
 
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
+        while ret:
+            ret, frame = video.read()
+            if not ret:
+                break
 
-    video.release()
+            processed_frame, qtdOccupied = yolo_analise_parking.process_frame(frame, class_list_str)
+            
+            _, jpeg = cv2.imencode('.jpg', processed_frame)
+            frame_bytes = jpeg.tobytes()
+
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
+            
+            frame_count += 1
+            
+            if frame_count >= intervalo_segundos * 30:
+                with app.app_context():
+                    register_data(qtdOccupied)
+                frame_count = 0
+
+        video.release()
 
 @app.route('/video_feed')
 def video_feed():
-    stop_event = Event()
-    video_thread = Thread(target=process_video, args=(stop_event,))
-    video_thread.start()
-    return Response(process_video(stop_event), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(process_video(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -75,6 +99,15 @@ def upload_video():
             video_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             return redirect(url_for('index'))
     return render_template('frontend/tela.html')
+
+@app.route('/occupancy')
+def get_occupancy_data():
+    records = ParkingOccupancy.query.order_by(ParkingOccupancy.timestamp).all()
+    data = {
+        'timestamps': [record.timestamp for record in records],
+        'occupied_spaces': [record.occupied_spaces for record in records],
+    }
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
