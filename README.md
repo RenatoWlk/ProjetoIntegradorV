@@ -1,12 +1,13 @@
 # Park View
 
-Repositório do Projeto Integrador V. Inteligência artificial para detectar e classificar carros em estacionamentos.
+Repositório do Projeto Integrador V. Inteligência artificial (YOLOV8) para detectar e classificar carros em estacionamentos.
 
 ## Features
 
-- Feature 1: Detecção de vagas
-- Feature 2: Detecção de carros, motos, bicicletas e caminhões
-- Feature 3: Classificação de ocupação
+- Detecção de Vagas: Áreas demarcadas no vídeo que detectam quando há veículos na vaga.
+- Detecção Multiclasse: Detecção de carros, motos, bicicletas e caminhões.
+- Classificação de Ocupação: Contador de vagas livres e ocupadas, contador para cada tipo de veículo, log de ocupação.
+- Gráfico de Ocupação ao Longo do Tempo: Gráfico de linha que mostra a ocupação de vagas ao longo do tempo, atualizado em tempo real.
 
 ## Installation
 
